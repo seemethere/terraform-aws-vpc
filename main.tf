@@ -3,7 +3,8 @@ data "aws_availability_zones" "available" {
 }
 
 locals {
-  az = length(var.availability_zones) > 0 ? var.availability_zones : data.aws_availability_zones.available.names
+  orig_az = length(var.availability_zones) > 0 ? var.availability_zones : data.aws_availability_zones.available.names
+  az      = concat(local.orig_az, local.orig_az)
 
   tags_without_name = merge(
     {
